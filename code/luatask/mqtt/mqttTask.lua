@@ -47,7 +47,7 @@ sys.taskInit(
                 if mqttClient:connect("http://47.106.72.131",3000,"tcp") then
                     ready = true
                     --订阅主题
-                    if mqttClient:subscribe({["/v1/device/"..imei.."in"]=1}) then
+                    if mqttClient:subscribe({["/v1/device/"..imei.."/in"]=1}) then
                         mqttOutMsg.init()
                         --循环处理接收和发送的数据
                         while true do
