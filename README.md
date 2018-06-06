@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Luat
 
 Luat = Lua +  AT  
@@ -37,3 +38,6 @@ script和script_LuaTask是两版上层脚本开发架构：
 Luat团队会一直同步维护这两个版本，建议新项目使用script_LuaTask版本开发。
 
 
+=======
+init
+>>>>>>> 9d4b6e5364f31a601695f9c1f7632a15b252d175
