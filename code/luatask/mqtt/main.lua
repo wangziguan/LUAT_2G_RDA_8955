@@ -21,7 +21,7 @@ require "sys"
 require "net"
 --每1分钟查询一次GSM信号强度
 --每1分钟查询一次基站信息
-net.startQueryAll(60000, 60000)
+--net.startQueryAll(60000, 60000)
 
 --加载控制台调试功能模块（此处代码配置的是uart1，波特率115200）
 --此功能模块不是必须的，根据项目需求决定是否加载
@@ -53,12 +53,13 @@ wdt.setup(pio.P0_30, pio.P0_31)
 
 --加载远程升级功能模块【强烈建议打开此功能】
 --如下3行代码，只是简单的演示如何使用update功能，详情参考update的api以及demo/update
---PRODUCT_KEY = "v32xEAKsGTIEQxtqgwCldp5aPlcnPs3K"
+--PRODUCT_KEY = "tmuWu35Wo4pJtYh5F"
 --require "update"
 --update.request()
 
 --加载MQTT功能测试模块
 require "mqttTask"
+
 --启动系统框架
 sys.init(0, 0)
 sys.run()

@@ -9,6 +9,7 @@ module(...,package.seeall)
 
 require"misc"
 require"mqtt"
+require"func"
 require"mqttOutMsg"
 require"mqttInMsg"
 
@@ -21,13 +22,6 @@ function isReady()
     return ready
 end
 
-local will = {
-    qos = 1,
-    retain = 1,
-    topic = "/v1/device/"..misc.getImei(),
-    payload = "offline"
-}
-
 --启动MQTT客户端任务
 sys.taskInit(
     function()
@@ -38,13 +32,20 @@ sys.taskInit(
             end
             
             if socket.isReady() then
-                local imei = misc.getImei()
+                imei = misc.getImei()
+                local will = {
+                    qos = 1,
+                    retain = 0,
+                    topic = "/v1/device/"..imei.."/out",
+                    payload = func.hexstobins("0430")
+                }
+                
                 --创建一个MQTT客户端
-                local mqttClient = mqtt.client(imei,600,"user","password")
+                local mqttClient = mqtt.client(imei,30,"","",0,will)
                 --阻塞执行MQTT CONNECT动作，直至成功
                 --如果使用ssl连接，打开mqttClient:connect("lbsmqtt.airm2m.com",1884,"tcp_ssl",{caCert="ca.crt"})，根据自己的需求配置
                 --mqttClient:connect("lbsmqtt.airm2m.com",1884,"tcp_ssl",{caCert="ca.crt"})
-                if mqttClient:connect("http://47.106.72.131",3000,"tcp") then
+                if mqttClient:connect("www.kevincc.com",1883,"tcp") then
                     ready = true
                     --订阅主题
                     if mqttClient:subscribe({["/v1/device/"..imei.."/in"]=1}) then
