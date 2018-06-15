@@ -32,7 +32,7 @@ sys.taskInit(
             end
             
             if socket.isReady() then
-                local imei = misc.getImei()
+                imei = misc.getImei()
                 local will = {
                     qos = 1,
                     retain = 0,
@@ -41,11 +41,11 @@ sys.taskInit(
                 }
                 
                 --创建一个MQTT客户端
-                local mqttClient = mqtt.client(imei,60,"user","password",0,will)
+                local mqttClient = mqtt.client(imei,30,"","",0,will)
                 --阻塞执行MQTT CONNECT动作，直至成功
                 --如果使用ssl连接，打开mqttClient:connect("lbsmqtt.airm2m.com",1884,"tcp_ssl",{caCert="ca.crt"})，根据自己的需求配置
                 --mqttClient:connect("lbsmqtt.airm2m.com",1884,"tcp_ssl",{caCert="ca.crt"})
-                if mqttClient:connect("47.106.72.131",1883,"tcp") then
+                if mqttClient:connect("www.kevincc.com",1883,"tcp") then
                     ready = true
                     --订阅主题
                     if mqttClient:subscribe({["/v1/device/"..imei.."/in"]=1}) then

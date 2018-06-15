@@ -25,7 +25,7 @@ end
 
 --- 上报pub01信息
 function pub01()
-    insertMsg("/v1/device/"..imei.."/out", func.hexstobins("0101"), 1, {cb=pub01Cb})
+    insertMsg("/v1/device/"..misc.getImei().."/out", func.hexstobins("0101"), 1, {cb=pub01Cb})
 end
 
 --- pub02回调函数
@@ -35,7 +35,7 @@ end
 
 --- 上报pub02信息
 function pub02()
-    insertMsg("/v1/device/"..imei.."/out", func.hexstobins("0201"), 1, {cb=pub02Cb})
+    insertMsg("/v1/device/"..misc.getImei().."/out", func.hexstobins("0201"), 1, {cb=pub02Cb})
 end
 
 --[[
@@ -72,7 +72,7 @@ end
 
 --- 上报Online信息
 function pubOnline()
-    insertMsg("/v1/device/"..imei.."/out", func.hexstobins("0431"..ver2hexs(_G.VERSION)), 1, {cb=pubOnlineCb})
+    insertMsg("/v1/device/"..misc.getImei().."/out", func.hexstobins("0431"..ver2hexs(_G.VERSION)), 1, {cb=pubOnlineCb})
 end
 
 --- 初始化“MQTT客户端数据发送”
@@ -80,7 +80,7 @@ end
 -- @usage mqttOutMsg.init()
 function init()
     pubOnline()
-    timer=sys.timerLoopStart(pub01,600000)
+    timer=sys.timerLoopStart(pub01,60000)
 end
 
 --- 去初始化“MQTT客户端数据发送”

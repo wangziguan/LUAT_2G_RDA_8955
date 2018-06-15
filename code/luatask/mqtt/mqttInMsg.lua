@@ -6,6 +6,7 @@
 -- @release 2018.06.04
 
 module(...,package.seeall)
+local ssub,schar,smatch,sbyte,slen = string.sub,string.char,string.match,string.byte,string.len
 
 --- MQTT客户端数据接收处理
 -- @param mqttClient，MQTT客户端对象
@@ -20,7 +21,7 @@ function proc(mqttClient)
             log.info("mqttInMsg.proc",data.topic,string.toHex(data.payload))
                 
             --TODO：根据需求自行处理data.payload
-            if data.topic = "/v1/device/"..imei.."/in" then
+            if data.topic == "/v1/device/"..misc.getImei().."/in" then
                 local payload = string.toHex(data.payload)
                 --确保payload格式正确
                 if payload == nil then log.info("PAYLOAD ERROR!") return end
@@ -28,8 +29,8 @@ function proc(mqttClient)
                 --获取控制字
                 local cmd=ssub(payload,1,2)
                 --根据控制字处理
-                if cmd=="10" and ssub(payload,3)=="FF" then mqttOutMsg.pub01() end
-                elseif cmd=="20" adn ssub(payload,3)=="01" then mqttOutMsg.pub02() end
+                if cmd=="10" and ssub(payload,3)=="FF" then mqttOutMsg.pub01() 
+                elseif cmd=="20" and ssub(payload,3)=="01" then mqttOutMsg.pub02()
                 else log.info("CMD NOT SUPPORT!") end
             end
            
