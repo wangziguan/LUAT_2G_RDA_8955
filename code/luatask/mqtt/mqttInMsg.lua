@@ -21,7 +21,7 @@ function proc(mqttClient)
             log.info("mqttInMsg.proc",data.topic,string.toHex(data.payload))
                 
             --TODO：根据需求自行处理data.payload
-            if data.topic == "/v1/device/"..misc.getImei().."/in" then
+            if data.topic == "tmuWu35Wo4pJtYh5F/"..misc.getImei().."/in" then
                 local payload = string.toHex(data.payload)
                 --确保payload格式正确
                 if payload == nil then log.info("PAYLOAD ERROR!") return end

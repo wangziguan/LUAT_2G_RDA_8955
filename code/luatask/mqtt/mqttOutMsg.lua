@@ -5,7 +5,6 @@
 -- @copyright wangziguan
 -- @release 2018.06.04
 
-
 module(...,package.seeall)
 
 --加载常用的全局函数至本地
@@ -25,7 +24,7 @@ end
 
 --- 上报pub01信息
 function pub01()
-    insertMsg("/v1/device/"..misc.getImei().."/out", func.hexstobins("0101"), 1, {cb=pub01Cb})
+    insertMsg("tmuWu35Wo4pJtYh5F/"..misc.getImei().."/out", string.fromHex("0101"), 1, {cb=pub01Cb})
 end
 
 --- pub02回调函数
@@ -35,7 +34,7 @@ end
 
 --- 上报pub02信息
 function pub02()
-    insertMsg("/v1/device/"..misc.getImei().."/out", func.hexstobins("0201"), 1, {cb=pub02Cb})
+    insertMsg("tmuWu35Wo4pJtYh5F/"..misc.getImei().."/out", string.fromHex("0201"), 1, {cb=pub02Cb})
 end
 
 --[[
@@ -65,6 +64,17 @@ local function ver2hexs(ver)
 	return hexs
 end
 
+local function cellinfo2hexs()
+    local hexs = ""
+    local cellinfo = net.getCellInfo()
+    --确保得到cellinfo
+    if cellinfo == nil or type(cellinfo) ~= "string" then return nil,"nil cell info" end
+    --cellinfo模式为lac.ci.rssi;
+    local lac, ci, rssi = smatch(cellinfo, "(%d+)%.(%d+)%.(%d+)%;")
+    hexs=hexs..string.fromHex(lac)..string.fromHex(ci)
+    return hexs
+end
+
 --- Online回调函数
 local function pubOnlineCb(result)
     log.info("mqttOutMsg.pubOnlineCb",result)
@@ -72,7 +82,7 @@ end
 
 --- 上报Online信息
 function pubOnline()
-    insertMsg("/v1/device/"..misc.getImei().."/out", func.hexstobins("0431"..ver2hexs(_G.VERSION)), 1, {cb=pubOnlineCb})
+    insertMsg("tmuWu35Wo4pJtYh5F/"..misc.getImei().."/out", string.fromHex("0431"..ver2hexs(_G.VERSION)..cellinfo2hexs), 1, {cb=pubOnlineCb})
 end
 
 --- 初始化“MQTT客户端数据发送”
@@ -80,7 +90,7 @@ end
 -- @usage mqttOutMsg.init()
 function init()
     pubOnline()
-    timer=sys.timerLoopStart(pub01,60000)
+    timer=sys.timerLoopStart(pub01,300000)
 end
 
 --- 去初始化“MQTT客户端数据发送”

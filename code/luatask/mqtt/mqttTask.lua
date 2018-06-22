@@ -9,7 +9,7 @@ module(...,package.seeall)
 
 require"misc"
 require"mqtt"
-require"func"
+require"net"
 require"mqttOutMsg"
 require"mqttInMsg"
 
@@ -36,8 +36,8 @@ sys.taskInit(
                 local will = {
                     qos = 1,
                     retain = 0,
-                    topic = "/v1/device/"..imei.."/out",
-                    payload = func.hexstobins("0430")
+                    topic = "tmuWu35Wo4pJtYh5F/"..imei.."/out",
+                    payload = string.fromHex("0430")
                 }
                 
                 --创建一个MQTT客户端
@@ -45,10 +45,10 @@ sys.taskInit(
                 --阻塞执行MQTT CONNECT动作，直至成功
                 --如果使用ssl连接，打开mqttClient:connect("lbsmqtt.airm2m.com",1884,"tcp_ssl",{caCert="ca.crt"})，根据自己的需求配置
                 --mqttClient:connect("lbsmqtt.airm2m.com",1884,"tcp_ssl",{caCert="ca.crt"})
-                if mqttClient:connect("www.kevincc.com",1883,"tcp") then
+                if mqttClient:connect("mqtt3.heytz.com",2883,"tcp") then
                     ready = true
                     --订阅主题
-                    if mqttClient:subscribe({["/v1/device/"..imei.."/in"]=1}) then
+                    if mqttClient:subscribe({["tmuWu35Wo4pJtYh5F/"..imei.."/in"]=1}) then
                         mqttOutMsg.init()
                         --循环处理接收和发送的数据
                         while true do
