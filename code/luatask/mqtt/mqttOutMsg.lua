@@ -64,6 +64,12 @@ local function ver2hexs(ver)
 	return hexs
 end
 
+--[[
+函数名：cellinfo2hexs
+功能  ：cellinfo转换成字符串
+参数  ：无
+返回值：十六进制字符串hexs	
+]]
 local function cellinfo2hexs()
     local hexs = ""
     local cellinfo = net.getCellInfo()
@@ -71,7 +77,7 @@ local function cellinfo2hexs()
     if cellinfo == nil or type(cellinfo) ~= "string" then return nil,"nil cell info" end
     --cellinfo模式为lac.ci.rssi;
     local lac, ci, rssi = smatch(cellinfo, "(%d+)%.(%d+)%.(%d+)%;")
-    hexs=hexs..string.fromHex(lac)..string.fromHex(ci)
+    hexs=hexs..string.format("%04u",tonumber(lac))..string.format("%05u",tonumber(ci))
     return hexs
 end
 
