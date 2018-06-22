@@ -77,7 +77,7 @@ local function cellinfo2hexs()
     if cellinfo == nil or type(cellinfo) ~= "string" then return nil,"nil cell info" end
     --cellinfo模式为lac.ci.rssi;
     local lac, ci, rssi = smatch(cellinfo, "(%d+)%.(%d+)%.(%d+)%;")
-    hexs=hexs..string.format("%04u",tonumber(lac))..string.format("%05u",tonumber(ci))
+    hexs=hexs..string.format("%04u",tonumber(lac))..string.format("%06u",tonumber(ci))
     return hexs
 end
 
