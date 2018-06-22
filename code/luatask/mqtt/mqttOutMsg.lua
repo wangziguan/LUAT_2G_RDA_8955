@@ -88,7 +88,7 @@ end
 
 --- 上报Online信息
 function pubOnline()
-    insertMsg("tmuWu35Wo4pJtYh5F/"..misc.getImei().."/out", string.fromHex("0431"..ver2hexs(_G.VERSION)..cellinfo2hexs), 1, {cb=pubOnlineCb})
+    insertMsg("tmuWu35Wo4pJtYh5F/"..misc.getImei().."/out", string.fromHex("0431"..ver2hexs(_G.VERSION)..cellinfo2hexs()), 1, {cb=pubOnlineCb})
 end
 
 --- 初始化“MQTT客户端数据发送”
