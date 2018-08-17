@@ -6,6 +6,9 @@
 -- @release 2018.06.04
 
 module(...,package.seeall)
+
+require"update"
+
 local ssub,schar,smatch,sbyte,slen = string.sub,string.char,string.match,string.byte,string.len
 
 --- MQTT客户端数据接收处理
@@ -31,6 +34,7 @@ function proc(mqttClient)
                 --根据控制字处理
                 if cmd=="10" and ssub(payload,3)=="FF" then mqttOutMsg.pub01() 
                 elseif cmd=="20" and ssub(payload,3)=="01" then mqttOutMsg.pub02()
+                elseif cmd=="40" and ssub(payload,3)=="FF" then update.request(nil,"47.106.72.131:3000/update")
                 else log.info("CMD NOT SUPPORT!") end
             end
            

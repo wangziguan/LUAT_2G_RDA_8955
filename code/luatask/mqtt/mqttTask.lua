@@ -46,6 +46,7 @@ sys.taskInit(
                 --如果使用ssl连接，打开mqttClient:connect("lbsmqtt.airm2m.com",1884,"tcp_ssl",{caCert="ca.crt"})，根据自己的需求配置
                 --mqttClient:connect("lbsmqtt.airm2m.com",1884,"tcp_ssl",{caCert="ca.crt"})
                 if mqttClient:connect("mqtt3.heytz.com",2883,"tcp") then
+                -- if mqttClient:connect("www.kevincc.com",1883,"tcp") then
                     ready = true
                     --订阅主题
                     if mqttClient:subscribe({["tmuWu35Wo4pJtYh5F/"..imei.."/in"]=1}) then
